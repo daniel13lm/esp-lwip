@@ -542,6 +542,7 @@ ip4_input(struct pbuf *p, struct netif *inp)
   }
 #endif
 
+
   /* obtain IP header length in bytes */
   iphdr_hlen = IPH_HL_BYTES(iphdr);
   /* obtain ip length in bytes */
@@ -1140,6 +1141,13 @@ ip4_output(struct pbuf *p, const ip4_addr_t *src, const ip4_addr_t *dest,
     return ERR_RTE;
   }
 
+  #ifdef LWIP_HOOK_IP4_OUTPUT
+  if (LWIP_HOOK_IP4_OUTPUT(p, src, dest, ttl, tos, proto)) {
+    /* the packet has been eaten */
+    return ERR_OK;
+  }
+
+#endif
   return ip4_output_if(p, src, dest, ttl, tos, proto, netif);
 }
 

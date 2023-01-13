@@ -1331,6 +1331,12 @@ ip6_output(struct pbuf *p, const ip6_addr_t *src, const ip6_addr_t *dest,
     return ERR_RTE;
   }
 
+  #ifdef LWIP_HOOK_IP6_OUTPUT
+  if (LWIP_HOOK_IP6_OUTPUT(p, src, dest, hl, tc, nexth,netif)) {
+    /* the packet has been eaten */
+    return ERR_OK;
+  }
+
   return ip6_output_if(p, src, dest, hl, tc, nexth, netif);
 }
 

@@ -2923,6 +2923,16 @@
 #define LWIP_HOOK_IP4_INPUT(pbuf, input_netif)
 #endif
 
+
+#ifdef __DOXYGEN__
+#define LWIP_HOOK_IP4_OUTPUT(p, src, dest, ttl, tos, proto)
+#endif
+
+#ifdef __DOXYGEN__
+#define LWIP_HOOK_IP6_OUTPUT(p, src, dest, hl, tc, nexth,netif)
+#endif
+
+
 /**
  * LWIP_HOOK_IP4_ROUTE(dest):
  * Called from ip_route() (IPv4)
