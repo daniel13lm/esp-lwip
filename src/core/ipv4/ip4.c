@@ -1142,7 +1142,7 @@ ip4_output(struct pbuf *p, const ip4_addr_t *src, const ip4_addr_t *dest,
   }
 
   #ifdef LWIP_HOOK_IP4_OUTPUT
-  if (LWIP_HOOK_IP4_OUTPUT(p, src, dest, ttl, tos, proto)) {
+  if (LWIP_HOOK_IP4_OUTPUT(p, src, dest, ttl, tos, proto, netif)) {
     /* the packet has been eaten */
     return ERR_OK;
   }
