@@ -883,13 +883,6 @@ ip4_output_if(struct pbuf *p, const ip4_addr_t *src, const ip4_addr_t *dest,
               u8_t ttl, u8_t tos,
               u8_t proto, struct netif *netif)
 {
-  
-  #ifdef LWIP_HOOK_IP4_OUTPUT
-  if (LWIP_HOOK_IP4_OUTPUT(p, src, dest, ttl, tos, proto, netif)) {
-    /* the packet has been eaten */
-    return ERR_OK;
-  }
-  #endif
 #if IP_OPTIONS_SEND
   return ip4_output_if_opt(p, src, dest, ttl, tos, proto, netif, NULL, 0);
 }
@@ -943,6 +936,14 @@ ip4_output_if_opt_src(struct pbuf *p, const ip4_addr_t *src, const ip4_addr_t *d
                       u8_t ttl, u8_t tos, u8_t proto, struct netif *netif, void *ip_options,
                       u16_t optlen)
 {
+
+  #ifdef LWIP_HOOK_IP4_OUTPUT
+  if (LWIP_HOOK_IP4_OUTPUT(p, src, dest, ttl, tos, proto, netif)) {
+    /* the packet has been eaten */
+    return ERR_OK;
+  }
+  #endif
+
 #endif /* IP_OPTIONS_SEND */
   struct ip_hdr *iphdr;
   ip4_addr_t dest_addr;
