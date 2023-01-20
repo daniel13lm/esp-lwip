@@ -937,12 +937,7 @@ ip4_output_if_opt_src(struct pbuf *p, const ip4_addr_t *src, const ip4_addr_t *d
                       u16_t optlen)
 {
 
-  #ifdef LWIP_HOOK_IP4_OUTPUT
-  if (LWIP_HOOK_IP4_OUTPUT(p, src, dest, ttl, tos, proto, netif)) {
-    /* the packet has been eaten */
-    return ERR_OK;
-  }
-  #endif
+  
 
 #endif /* IP_OPTIONS_SEND */
   struct ip_hdr *iphdr;
@@ -1113,6 +1108,12 @@ ip4_output_if_opt_src(struct pbuf *p, const ip4_addr_t *src, const ip4_addr_t *d
   LWIP_ERROR("ip4_output_if: Packets larger than MTU, discarded!!!",!(netif->mtu && p->tot_len > netif->mtu),return ERR_IF;);
 #endif /* IP_FRAG */
 
+  #ifdef LWIP_HOOK_IP4_OUTPUT
+  if (LWIP_HOOK_IP4_OUTPUT(p, src, dest, ttl, tos, proto, netif)) {
+    /* the packet has been eaten */
+    return ERR_OK;
+  }
+  #endif
   LWIP_DEBUGF(IP_DEBUG, ("ip4_output_if: call netif->output()\n"));
   return netif->output(netif, p, dest);
 }
