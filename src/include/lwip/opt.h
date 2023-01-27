@@ -2923,14 +2923,26 @@
 #define LWIP_HOOK_IP4_INPUT(pbuf, input_netif)
 #endif
 
+/**
+ * LWIP_HOOK_IP4_OUTPUT(pbuf, netif):
+ * Called from ip_input() (IPv4)
+ * Signature:\code{.c}
+ *   int my_hook(struct pbuf *pbuf, struct netif *netif);
+ * \endcode
+ * Arguments:
+ * - pbuf: received struct pbuf passed to ip_input()
+ * - netif: struct netif on which the packet it is going to be sent
+ * Return values:
+ * - 0: Hook has not consumed the packet, packet is processed as normal
+ * - != 0: Hook has consumed the packet.
+ * If the hook consumed the packet, 'pbuf' is in the responsibility of the hook
+ * (i.e. free it when done).
+ */
 
 #ifdef __DOXYGEN__
-#define LWIP_HOOK_IP4_OUTPUT(p, src, dest, ttl, tos, proto)
+#define LWIP_HOOK_IP4_OUTPUT(p, netif)
 #endif
 
-#ifdef __DOXYGEN__
-#define LWIP_HOOK_IP6_OUTPUT(p, src, dest, hl, tc, nexth,netif)
-#endif
 
 
 /**

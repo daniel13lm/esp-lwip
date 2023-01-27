@@ -1170,12 +1170,7 @@ ip6_output_if(struct pbuf *p, const ip6_addr_t *src, const ip6_addr_t *dest,
       }
     }
   }
-  #ifdef LWIP_HOOK_IP6_OUTPUT
-  if (LWIP_HOOK_IP6_OUTPUT(p, src, dest, hl, tc, nexth,netif)) {
-    /* the packet has been eaten */
-    return ERR_OK;
-  }
-  #endif
+
 
   return ip6_output_if_src(p, src_used, dest, hl, tc, nexth, netif);
 }
